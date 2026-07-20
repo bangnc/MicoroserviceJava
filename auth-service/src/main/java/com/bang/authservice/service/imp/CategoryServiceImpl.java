@@ -3,6 +3,8 @@ package com.bang.authservice.service.imp;
 import com.bang.authservice.dto.request.CreateCategoryRequest;
 import com.bang.authservice.dto.response.CategoryResponse;
 import com.bang.authservice.entity.Category;
+import com.bang.authservice.exception.AppException;
+import com.bang.authservice.exception.ErrorCode;
 import com.bang.authservice.repository.CategoryRepository;
 import com.bang.authservice.service.CategoryService;
 import org.springframework.stereotype.Service;
@@ -31,9 +33,7 @@ public class CategoryServiceImpl implements CategoryService {
                                     request.getParentId()
                             )
                             .orElseThrow(
-                                    () -> new RuntimeException(
-                                            "Parent category not found"
-                                    )
+                                    () -> new AppException(ErrorCode.USER_EXISTED)
                             );
 
 

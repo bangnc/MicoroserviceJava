@@ -1,5 +1,6 @@
 package com.bang.authservice.controller;
 
+import com.bang.authservice.dto.request.ApiResponse;
 import com.bang.authservice.dto.request.CreateCategoryRequest;
 import com.bang.authservice.dto.response.CategoryResponse;
 import com.bang.authservice.service.CategoryService;
@@ -19,11 +20,13 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @PostMapping
-    public ResponseEntity<CategoryResponse> createCategory(
-            @Valid @RequestBody CreateCategoryRequest request
+    public ApiResponse<CategoryResponse> createCategory(
+             @RequestBody @Valid CreateCategoryRequest request
             ){
+        ApiResponse<CategoryResponse> apiResponse = new ApiResponse<>();
+        apiResponse.setResult(categoryService.createCategory(request));
         CategoryResponse response = categoryService.createCategory(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        return apiResponse;
     }
     @GetMapping("/tree")
     public ResponseEntity<List<CategoryResponse>> getTree() {
