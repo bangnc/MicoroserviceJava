@@ -7,9 +7,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.bang.authservice.entity.User;
+import org.springframework.util.CollectionUtils;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
+import java.util.StringJoiner;
 
 
 @Service
@@ -44,6 +46,7 @@ public class JwtService {
                 .claim("userId", user.getId())
 
                 .claim("email", user.getEmail())
+                .claim("scope", buildScope(user))
 
                 .issuedAt(new Date())
 
@@ -82,5 +85,12 @@ public class JwtService {
 
         return true;
 
+    }
+    private String buildScope(User user){
+        StringJoiner stringJoiner = new StringJoiner(" ");
+        if (!CollectionUtils.isEmpty(user.getRoles())){
+            user.getRoles().forEach(stringJoiner::add);
+        }
+        return stringJoiner.toString();
     }
 }

@@ -8,6 +8,7 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface UserMapper {
     UserResponse toUserResponse(User user);
+
     default RoleResponse map(String role) {
         RoleResponse response = new RoleResponse();
         response.setName(role);

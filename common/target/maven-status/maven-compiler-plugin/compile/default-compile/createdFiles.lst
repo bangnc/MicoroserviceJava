@@ -1,3 +1,5 @@
+com\bang\common\response\ApiResponse$ApiResponseBuilder.class
+com\bang\common\exception\BusinessException.class
+com\bang\common\exception\GlobalExceptionHandler.class
 com\bang\common\constants\AppConstants.class
 com\bang\common\response\ApiResponse.class
-com\bang\common\exception\BusinessException.class
