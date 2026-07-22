@@ -3,7 +3,9 @@ package com.bang.authservice.controller;
 import com.bang.authservice.dto.request.LoginRequest;
 import com.bang.authservice.dto.request.RegisterRequest;
 import com.bang.authservice.dto.response.LoginResponse;
+import com.bang.authservice.dto.response.UserResponse;
 import com.bang.authservice.service.AuthService;
+import com.bang.common.response.ApiResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,9 +22,11 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody RegisterRequest request){
-        authService.register(request);
-        return ResponseEntity.ok("Register success");
+    public ApiResponse<UserResponse> register(@RequestBody RegisterRequest request){
+        return ApiResponse.<UserResponse>builder()
+                .result(authService.register(request))
+                .build();
+
     }
 
     @PostMapping("/login")

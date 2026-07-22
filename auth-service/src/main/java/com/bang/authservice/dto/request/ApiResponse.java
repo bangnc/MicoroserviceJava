@@ -2,8 +2,16 @@ package com.bang.authservice.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.JoinColumn;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ApiResponse <T>{
     private int code = 1000;
 
