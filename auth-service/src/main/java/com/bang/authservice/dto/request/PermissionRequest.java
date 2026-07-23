@@ -1,4 +1,4 @@
-package com.bang.authservice.dto.response;
+package com.bang.authservice.dto.request;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -8,7 +8,7 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class PermissionResponse {
+public class PermissionRequest {
     String name;
     String description;
 }

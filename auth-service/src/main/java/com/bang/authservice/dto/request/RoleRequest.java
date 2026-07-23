@@ -1,14 +1,17 @@
-package com.bang.authservice.dto.response;
+package com.bang.authservice.dto.request;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class PermissionResponse {
+public class RoleRequest {
     String name;
     String description;
+    Set<String> permissions;
 }

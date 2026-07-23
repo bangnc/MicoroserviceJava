@@ -89,7 +89,8 @@ public class User {
     @Column(name = "UnitId")
     private UUID unitId;
 
-    Set<String> roles;
+    @ManyToMany
+    Set<Role> roles;
 
     @PostLoad
     public void postLoad() {
