@@ -1,5 +1,7 @@
 package com.bang.authservice.security;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -12,6 +14,7 @@ import org.springframework.util.CollectionUtils;
 import javax.crypto.SecretKey;
 import java.util.Date;
 import java.util.StringJoiner;
+import java.util.UUID;
 
 
 @Service
@@ -47,6 +50,7 @@ public class JwtService {
 
                 .claim("email", user.getEmail())
                 .claim("scope", buildScope(user))
+                .claim("jit", UUID.randomUUID().toString())
 
                 .issuedAt(new Date())
 
@@ -99,5 +103,15 @@ public class JwtService {
            });
         }
         return stringJoiner.toString();
+    }
+
+    public Claims verifyToken(String token) {
+
+        Jws<Claims> claims = Jwts.parser()
+                .verifyWith(key)
+                .build()
+                .parseSignedClaims(token);
+
+        return claims.getPayload();
     }
 }

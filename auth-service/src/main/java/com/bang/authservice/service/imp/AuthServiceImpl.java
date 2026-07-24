@@ -1,19 +1,22 @@
 package com.bang.authservice.service.imp;
 
 import com.bang.authservice.dto.request.LoginRequest;
+import com.bang.authservice.dto.request.LogoutRequest;
 import com.bang.authservice.dto.request.RegisterRequest;
 import com.bang.authservice.dto.response.LoginResponse;
 import com.bang.authservice.dto.response.UserResponse;
+import com.bang.authservice.entity.InvalidatedToken;
 import com.bang.authservice.entity.User;
 import com.bang.authservice.enums.Role;
 import com.bang.authservice.mapper.UserMapper;
+import com.bang.authservice.repository.InvalidatedTokenRepository;
 import com.bang.authservice.repository.UserRepository;
 import com.bang.authservice.security.JwtService;
 import com.bang.authservice.service.AuthService;
 import jakarta.persistence.Table;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
+import java.util.Date;
 import java.util.HashSet;
 
 @Service
@@ -23,12 +26,15 @@ public class AuthServiceImpl implements AuthService {
     private  final BCryptPasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private  final UserMapper userMapper;
+    private  final InvalidatedTokenRepository invalidatedTokenRepository;
+
     public AuthServiceImpl(UserRepository userRepository,
-                           BCryptPasswordEncoder passwordEncoder, JwtService jwtService, UserMapper userMapper){
+                           BCryptPasswordEncoder passwordEncoder, JwtService jwtService, UserMapper userMapper, InvalidatedTokenRepository invalidatedTokenRepository){
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtService = jwtService;
         this.userMapper = userMapper;
+        this.invalidatedTokenRepository = invalidatedTokenRepository;
     }
 
     @Override
@@ -90,5 +96,16 @@ public class AuthServiceImpl implements AuthService {
                 token,
                 user.getUserName()
         );
+    }
+
+    public void logout(LogoutRequest request){
+        var signToken = jwtService.verifyToken(request.getToken());
+        String jit = signToken.get("jit", String.class);
+        Date expiryTime = signToken.getExpiration();
+        InvalidatedToken invalidatedToken = InvalidatedToken.builder()
+                .id(jit)
+                .expiryTime(expiryTime)
+                .build();
+        invalidatedTokenRepository.save(invalidatedToken);
     }
 }

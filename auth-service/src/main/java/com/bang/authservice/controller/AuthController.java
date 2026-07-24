@@ -1,6 +1,7 @@
 package com.bang.authservice.controller;
 
 import com.bang.authservice.dto.request.LoginRequest;
+import com.bang.authservice.dto.request.LogoutRequest;
 import com.bang.authservice.dto.request.RegisterRequest;
 import com.bang.authservice.dto.response.LoginResponse;
 import com.bang.authservice.dto.response.UserResponse;
@@ -37,5 +38,12 @@ public class AuthController {
         return ResponseEntity.ok(
                 authService.login(request)
         );
+    }
+
+    @PostMapping("/logout")
+    public ApiResponse<Void> logout(
+            @RequestBody LogoutRequest request) {
+         authService.logout(request);
+        return ApiResponse.<Void>builder().build();
     }
 }
