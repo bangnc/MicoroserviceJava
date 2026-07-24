@@ -1,17 +1,17 @@
-package com.bang.authservice.dto.response;
+package com.bang.authservice.dto.request;
 
 import java.time.LocalDate;
-import java.util.Set;
+import java.util.List;
+
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserResponse {
-    String id;
-    Set<RoleResponse> roles;
+public class UserUpdateRequest {
+    List<String> roles;
 }

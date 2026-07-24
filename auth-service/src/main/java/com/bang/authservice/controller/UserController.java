@@ -1,6 +1,7 @@
 package com.bang.authservice.controller;
 
 import com.bang.authservice.dto.request.ApiResponse;
+import com.bang.authservice.dto.request.UserUpdateRequest;
 import com.bang.authservice.dto.response.UserResponse;
 import com.bang.authservice.service.imp.UserService;
 import lombok.AccessLevel;
@@ -8,9 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -36,5 +35,12 @@ public class UserController {
     @GetMapping("/myInfo")
     ApiResponse<UserResponse> getMyInfo(){
         return ApiResponse.<UserResponse>builder().result(userService.getMyInfo()).build();
+    }
+
+    @PutMapping("/{userId}")
+    ApiResponse<UserResponse> updateUser(@PathVariable String userId, @RequestBody UserUpdateRequest request) {
+        return ApiResponse.<UserResponse>builder()
+                .result(userService.updateUser(userId, request))
+                .build();
     }
 }
