@@ -14,4 +14,5 @@ import lombok.experimental.FieldDefaults;
 public class UserResponse {
     String id;
     Set<RoleResponse> roles;
+    LocalDate dob;
 }

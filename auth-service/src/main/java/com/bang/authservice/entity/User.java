@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.persistence.Table;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.Set;
 import java.util.UUID;
@@ -88,6 +89,9 @@ public class User {
 
     @Column(name = "UnitId")
     private UUID unitId;
+
+    @Column(name = "Dob")
+    LocalDate dob;
 
     @ManyToMany
     Set<Role> roles;
